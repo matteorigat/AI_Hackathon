@@ -32,6 +32,7 @@
       background-color: #fff;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       overflow-y: auto; /* Aggiungi scroll solo quando necessario */
+      position: relative; /* Posizione relativa per consentire il posizionamento assoluto del loader */
     }
     .vertical-line {
       position: absolute;
@@ -55,7 +56,7 @@
       line-height: 1.6;
     }
     button {
-      margin-bottom: 50px;
+      margin-bottom: 20px;
       background-color: #007bff;
       color: #fff;
       border: none;
@@ -67,6 +68,75 @@
     }
     button:hover {
       background-color: #0056b3;
+    }
+    .loader-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999; /* Assicura che il loader sia sopra gli altri elementi */
+      display: none; /* Inizialmente nascosto */
+    }
+    .loader {
+      position: relative;
+      margin: 0 auto;
+      width: 100px;
+    }
+    .loader:before {
+      content: "";
+      display: block;
+      padding-top: 100%;
+    }
+    .circular {
+      animation: rotate 2s linear infinite;
+      height: 100%;
+      transform-origin: center center;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    .path {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+      stroke-linecap: round;
+    }
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes dash {
+      0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+      }
+      100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+      }
+    }
+    @keyframes color {
+      100%, 0% {
+        stroke: #d62d20;
+      }
+      40% {
+        stroke: #0057e7;
+      }
+      66% {
+        stroke: #008744;
+      }
+      80%, 90% {
+        stroke: #ffa700;
+      }
     }
   </style>
 </head>
@@ -89,6 +159,13 @@
           </div>
           <div class="vertical-line"></div>
           <button id="summarizeButton">Summarize</button>
+          <div id="loaderContainer" class="loader-container">
+            <div class="loader">
+              <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-2">
@@ -105,5 +182,11 @@
 
 <script src="utils/handler.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.getElementById('fileUploadButton').addEventListener('click', function() {
+    var loaderContainer = document.getElementById('loaderContainer');
+    loaderContainer.style.display = 'block';
+  });
+</script>
 </body>
 </html>
