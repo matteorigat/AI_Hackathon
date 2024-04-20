@@ -1,5 +1,12 @@
 from flask import Flask, request
 import os
+from langChain import Model_Class
+
+import ollama
+models = ['gemma:2b', 'gemma:7b']
+model = models[0]
+current_file_name = ""
+file_dict = {}
 
 app = Flask(__name__)
 
@@ -21,12 +28,80 @@ def send():
 
         file_path = folder_name + filename
         rebuild_file(bytes(bytes_base64['data']), file_path)
-        return 'File salvato con successo', 200
-    
+
+        langChain = Model_Class(file_path)
+        text = langChain.get_pdf_text()
+        text = langChain.format_text_per_page(text)
+
+        return text, 200
+
+
+@app.route('/full_text_summarize', methods=['POST'])
+def full_text_summarize():
+    if request.method == 'POST':
+        json = request.json
+        input_text = json.get('data')
+
+        text = Model_Class.get_summarize(input_text)
+        return text, 200
+    else:
+        return "", 404
+
+@app.route('/short_text_summarize', methods=['POST'])
+def short_text_summarize():
+    if request.method == 'POST':
+        json = request.json
+        input_text = json.get('data')
+
+        text = Model_Class.get_short_summarize(input_text)
+        return text, 200
+    else:
+        return "", 404
+
+@app.route('/answer_question', methods=['POST'])
+def answer_question():
+    if request.method == 'POST':
+        json = request.json
+        input_text = json.get('data')
+
+        Model_Class.init_chain(text)
+        Model_Class.get_answer(input_text)
+        return text, 200
+    else:
+        return "", 404
+
+@app.route('/selected_questions', methods=['POST'])
+def selected_questions():
+    if request.method == 'POST':
+        json = request.json
+        input_text = json.get('data')
+        text = Model_Class.get_questions(input_text)
+        return text, 200
+    else:
+        return "", 404
+
+"""
+@app.route('/chapter_bulletpoints', methods=['POST'])
+def chapter_bulletpoints():
+    if request.method == 'POST':
+        json = request.json
+        input_text = json.get('data')
+        text = get_bulletpoints(input_text)
+        return text, 200
+    else:
+        return "", 404
+"""
+
+
 def rebuild_file(bytes, file_path):    
     with open(file_path, 'wb') as file:
         file.write(bytes)    
         print("File successfully rebuilt.")
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=23456)
+
+
+
+
+

@@ -49,5 +49,5 @@ if __name__ == '__main__':
     print(pages[0].page_content)
 
     # summerize
-    langChain = langChain.Chain_Class()
-    print(langChain.get_summarization(pages))
+    langChain = langChain.Chain_Class(pdf_path)
+    print(langChain.get_summarize(pages)['output_text'])
