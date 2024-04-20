@@ -9,17 +9,45 @@
 # Dare opzione di usare font che possono leggere persone dislessiche (?)
 # Dare opzione di fare un read aloud
 
+import gemma
+import pdf_miner
+import langChain
+from langchain_community.document_loaders import PyPDFLoader
 
-# importing required classes
-from pypdf import PdfReader
+if __name__ == '__main__':
+    # Example usage
+    pdf_path = 'pdf/P1-10-sequence-learning.pdf'
+    text = pdf_miner.extract_text_from_pdf(pdf_path)
 
-# creating a pdf reader object
-reader = PdfReader('pdf/P1-10-sequence-learning.pdf')
+    #text = pdf_miner.format_text(text)
+    #print(text)
+    #print("\n----------------------------------------------------------------\n")
+    #print(gemma.get_summarization(text))
+    #print(gemma.get_questions(text))
 
-# printing number of pages in pdf file
-print(len(reader.pages))
 
 
-for page in reader.pages:
-    print(page.extract_text())
-    print("-------------------------------------------------------------")
+    """
+    # PDF pagina per pagina
+    text = pdf_miner.format_text_per_page(text)
+    print(text[0])
+    print("\n----------------------------------------------------------------\n")
+    #for page in text:
+        #print(gemma.get_summarization(page))
+        #print("QUESTIONS:       " + gemma.get_questions(page))
+
+
+    # QA
+    langChain = langChain.Chain_Class()
+    langChain.init_chain(text)
+    print(langChain.get_answer("What is the LSTM method?"))
+    
+    """
+
+    pdf_loader = PyPDFLoader(pdf_path)
+    pages = pdf_loader.load_and_split()
+    print(pages[0].page_content)
+
+    # summerize
+    langChain = langChain.Chain_Class()
+    print(langChain.get_summarization(pages))

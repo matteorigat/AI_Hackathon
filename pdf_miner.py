@@ -12,6 +12,13 @@ def format_text(output_dict):
         formatted_output += f"Page {page_num}:\n{text}\n\n"
     return formatted_output
 
+def format_text_per_page(output_dict):
+    formatted_output = []
+    for page_num, text in output_dict.items():
+        text = text.replace('\n', ' ')
+        formatted_output.append(f"Page {page_num}:\n{text}\n\n")
+    return formatted_output
+
 
 def extract_text_from_pdf(pdf_path):
     text_per_page = {}
@@ -21,7 +28,7 @@ def extract_text_from_pdf(pdf_path):
             if isinstance(element, LTTextContainer):
                 page_text += element.get_text()
         text_per_page[page_layout.pageid] = page_text
-    return format_text(text_per_page)
+    return text_per_page
 
 def extract_images_and_formulas(pdf_path):
     images = []
@@ -35,14 +42,7 @@ def extract_images_and_formulas(pdf_path):
         formulas.extend(formula_matches)
     return images, formulas
 
-# Example usage
-pdf_path = 'pdf/P1-10-sequence-learning.pdf'
-text = extract_text_from_pdf(pdf_path)
-#images, formulas = extract_images_and_formulas(pdf_path)
 
-# Print or process extracted text, images, and formulas as needed
-print("Extracted text:")
-print(text)
 
 """print("\nExtracted images:")
 for image in images:

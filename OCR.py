@@ -26,7 +26,7 @@ def extract_text_from_image(image):
     text = pytesseract.image_to_string(image)
     return text
 
-def process_page(page):
+"""def process_page(page):
     try:
         # Transfer image of pdf_file into array
         page_arr = np.array(page)
@@ -53,7 +53,7 @@ def process_page(page):
             return -1, e.message
         else:
             return -1, str(e)
-
+"""
 
 if __name__ == '__main__':
 
