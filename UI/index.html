@@ -6,11 +6,11 @@
   <title>Page with Bootstrap Columns</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Aggiungi stili personalizzati qui, se necessario */
     body, html {
       padding: 0;
       margin: 0;
       height: 100%;
+      background-color: #f8f9fa;
     }
     .container-fluid {
       padding-right: 0;
@@ -19,35 +19,57 @@
       margin-left: auto;
     }
     .colored-column {
-      height: 100vh; /* Altezza dell'intera finestra */
+      height: 100vh;
+      border-radius: 5px;
       padding: 20px;
+      margin-top: 0;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .vertical-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: rgba(0, 0, 0, 0.2);
+      right: 0;
+    }
+    .colored-column-content {
+      flex-grow: 1;
     }
   </style>
 </head>
 <body>
 
-<div class="container-fluid">
-  <div class="row g-0">
-    <div class="col-3">
-      <div class="colored-column bg-primary text-white">
-        <h2>Colonna 1</h2>
-        <p>Testo di esempio</p>
+  <div class="container-fluid">
+    <div class="row g-0">
+      <div class="col-3">
+        <div class="colored-column bg-light">
+          <h2>Colonna 1</h2>
+          <p>Testo di esempio</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="colored-column">
+          <div class="colored-column-content">
+            <h2>Colonna 2</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vehicula leo sit amet justo facilisis, nec tristique elit aliquet. Mauris vel sagittis ipsum, id viverra purus. Nullam quis magna auctor, condimentum enim nec, volutpat dui. Curabitur nec nunc ut lectus laoreet laoreet id a nisi. Phasellus ac erat lorem. Curabitur bibendum, nisi vel ultrices convallis, purus nulla pellentesque ex, a fringilla risus lacus eget risus. Sed posuere rutrum eros, eget convallis nisi tincidunt et. Nulla facilisi. Donec consectetur quam at eros vestibulum, id aliquam ex fringilla.</p>
+          </div>
+          <div class="vertical-line"></div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="colored-column">
+          <div class="colored-column-content">
+            <h2>Colonna 3</h2>
+            <p>Testo di esempio</p>
+          </div>
+          <div class="vertical-line"></div>
+        </div>
       </div>
     </div>
-    <div class="col">
-      <div class="colored-column bg-secondary text-white">
-        <h2>Colonna 2</h2>
-        <p>Testo di esempio</p>
-      </div>
-    </div>
-    <div class="col-2">
-      <div class="colored-column bg-success text-white">
-        <h2>Colonna 3</h2>
-        <p>Testo di esempio</p>
-      </div>
-    </div>
-  </div>
-</div>
+  </div>  
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
