@@ -1,4 +1,4 @@
-const url = "http://192.168.79.127:5000";
+const url = "http://192.168.79.34:23456";
 
 const sendFile = async function(fileName, data) {
     const path = url + '/send';
@@ -14,12 +14,12 @@ const sendFile = async function(fileName, data) {
         });
 
         if (response.ok) {
-            const responseData = await response.json();
-            const rispostaElement = document.getElementById('risposta');
-            if (rispostaElement) {
-                rispostaElement.textContent = responseData.message;
-            }
+            text = await response.json()
+                .then(data => data)
+                .catch(err => console.log(err));
+            
             console.log('File sent successfully!');
+            return text;
         } else {
             console.error('Failed to send file:', response.status);
         }

@@ -23,14 +23,15 @@ function createWindow() {
 				filePath = result.filePaths[0];
 				console.log("Selected: " + filePath);
 				
-				fs.readFile(filePath, (err, data) => {
+				fs.readFile(filePath, async (err, data) => {
 					if (err) {
 						console.error('Error reading file:', err);
 						return;
 					}
 
 					fileName = filePath.split("\\").pop();
-					api.sendFile(fileName, data);
+					text = await api.sendFile(fileName, data);
+					win.webContents.send('file-text', {'text': text});
 				});
 			}
 		}).catch(err => {
