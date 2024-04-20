@@ -14,7 +14,7 @@
 from pypdf import PdfReader
 
 # creating a pdf reader object
-reader = PdfReader('pdf/EdTech Challenge.pdf')
+reader = PdfReader('pdf/P1-10-sequence-learning.pdf')
 
 # printing number of pages in pdf file
 print(len(reader.pages))

@@ -1,7 +1,13 @@
+import os
 from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
 
-tokenizer = AutoTokenizer.from_pretrained("google/gemma-3b")
-model = AutoModelForCausalLM.from_pretrained("google/gemma-3b")
+os.environ["HF_TOKEN"] = "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"
+
+
+
+tokenizer = AutoTokenizer.from_pretrained("google/gemma-2b")
+model = AutoModelForCausalLM.from_pretrained("google/gemma-2b")
 
 input_text = "what you know about universe"
 input_ids = tokenizer(input_text, return_tensors="pt")
