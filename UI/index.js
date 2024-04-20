@@ -13,13 +13,15 @@ function createWindow() {
     });
 
     win.loadFile('index.html');
-    //win.webContents.openDevTools();
+    win.webContents.openDevTools();
 
     ipcMain.on('open-file-dialog', (event) => {
 		dialog.showOpenDialog(mainWindow, {
 			properties: ['openFile']
 		}).then(result => {
 			if (!result.canceled) {
+				win.webContents.send('start-loader');
+
 				filePath = result.filePaths[0];
 				console.log("Selected: " + filePath);
 				
@@ -37,6 +39,15 @@ function createWindow() {
 		}).catch(err => {
 			console.log(err);
 		});
+	});
+
+	ipcMain.on('summarize', async (event, text) => {
+		summary = await api.summarize(text)
+			.then(summary => console.log(summary));
+	});
+
+	ipcMain.on('summarize-text', (event, text) => {
+		
 	});
 }
 
