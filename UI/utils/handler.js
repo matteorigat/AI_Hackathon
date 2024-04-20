@@ -14,5 +14,4 @@ ipcRenderer.on('file-text', (event, pages)=> {
         i++;
     });
     document.getElementById('file-text').innerHTML = text;
-    console.log("count: " + text.split('\n').length - 1);
 });
