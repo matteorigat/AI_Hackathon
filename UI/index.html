@@ -10,6 +10,7 @@
       padding: 0;
       margin: 0;
       height: 100%;
+      font-family: 'Arial', sans-serif;
       background-color: #f8f9fa;
     }
     .container-fluid {
@@ -20,23 +21,49 @@
     }
     .colored-column {
       height: 100vh;
-      border-radius: 5px;
+      border-radius: 10px;
       padding: 20px;
-      margin-top: 0;
+      margin-top: 20px;
       display: flex;
       flex-direction: column;
-      position: relative;
+      justify-content: space-between;
+      background-color: #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
     .vertical-line {
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 1px;
-      background-color: rgba(0, 0, 0, 0.2);
+      width: 2px;
+      background-color: rgba(0, 0, 0, 0.1);
       right: 0;
     }
     .colored-column-content {
       flex-grow: 1;
+    }
+    h2 {
+      color: #333;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #666;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    button {
+      margin-bottom: 50px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
@@ -46,8 +73,8 @@
     <div class="row g-0">
       <div class="col-3">
         <div class="colored-column bg-light">
-          <h2>Colonna 1</h2>
-          <p>Testo di esempio</p>
+          <h2>Files</h2>
+          <p>Qui andranno i nomi dei file...</p>
           <button id="fileUploadButton" name="fileUpload">ADD FILE</button>
         </div>
       </div>
