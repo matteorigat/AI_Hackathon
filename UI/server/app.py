@@ -11,19 +11,8 @@ def test():
 @app.route('/send', methods=['POST'])
 def send():
     if request.method == 'POST':
-        # Verifica se la richiesta contiene un file
-        print(request.files)
-        if 'file' not in request.files:
-            return 'Nessun file inviato', 400
-        
-        """file = request.files['file']
-        # Verifica se il file è stato selezionato
-        if file.filename == '':
-            return 'Nessun file selezionato', 400
-        
-        # Salva il file sul server
-        upload_folder = 'upload'
-        file.save(os.path.join(upload_folder, file.filename))"""
+        data = request.data
+        print(data)
 
         return 'File salvato con successo', 200
 
