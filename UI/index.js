@@ -28,8 +28,9 @@ function createWindow() {
 						console.error('Error reading file:', err);
 						return;
 					}
-					console.log('Bytes from file:', data);
-					api.sendFile(data);
+
+					fileName = filePath.split("\\").pop();
+					api.sendFile(fileName, data);
 				});
 			}
 		}).catch(err => {
