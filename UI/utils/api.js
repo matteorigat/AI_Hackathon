@@ -14,6 +14,11 @@ const sendFile = async function(fileName, data) {
         });
 
         if (response.ok) {
+            const responseData = await response.json();
+            const rispostaElement = document.getElementById('risposta');
+            if (rispostaElement) {
+                rispostaElement.textContent = responseData.message;
+            }
             console.log('File sent successfully!');
         } else {
             console.error('Failed to send file:', response.status);
