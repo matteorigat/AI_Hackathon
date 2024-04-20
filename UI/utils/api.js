@@ -1,12 +1,16 @@
 const url = "http://192.168.79.127:5000";
 
-const sendFile = async function(data) {
+const sendFile = async function(fileName, data) {
     const path = url + '/send';
 
     try {
         const response = await fetch(path, {
             method: 'POST',
-            body: data
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fileName, data })
         });
 
         if (response.ok) {
