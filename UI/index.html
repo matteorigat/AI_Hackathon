@@ -88,7 +88,7 @@
             <p id="file-text"></p>
           </div>
           <div class="vertical-line"></div>
-          <button onclick="salvaTesto()">Riassunto</button>
+          <button id="summarizeButton">Summarize</button>
         </div>
       </div>
       <div class="col-2">
@@ -105,19 +105,5 @@
 
 <script src="utils/handler.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-function salvaTesto() {
-  // Ottieni il testo selezionato
-  var selection = window.getSelection();
-  var selectedText = selection.toString();
-
-  // Salva il testo selezionato in una variabile e mostra un alert
-  if (selectedText !== "") {
-    alert("Testo selezionato: " + selectedText);
-  } else {
-    alert("Nessun testo selezionato.");
-  }
-}
-</script>
 </body>
 </html>
