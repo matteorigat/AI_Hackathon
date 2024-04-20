@@ -3,9 +3,6 @@ const url = "http://192.168.79.127:5000";
 const sendFile = async function(data) {
     const path = url + '/send';
 
-    FormData = new FormData();
-    FormData.append('file', data);
-
     try {
         const response = await fetch(path, {
             method: 'POST',
