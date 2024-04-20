@@ -7,6 +7,12 @@ document.getElementById('fileUploadButton')
 
 
 ipcRenderer.on('file-text', (event, pages)=> {
-    text = pages.text.join(' ');
+    i = 1;
+    text = '<br>';
+    pages.text.forEach(page => {
+        text += "<b>Page " + i + "</b><br>" + page + "<br><br>";
+        i++;
+    });
     document.getElementById('file-text').innerHTML = text;
+    console.log("count: " + text.split('\n').length - 1);
 });
