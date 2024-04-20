@@ -15,8 +15,26 @@ function createWindow() {
     win.loadFile('index.html');
     win.webContents.openDevTools();
 
-    ipcMain.on('open-file-dialog', (event, file) => {
-		api.sendPDF(file);
+    ipcMain.on('open-file-dialog', (event) => {
+		dialog.showOpenDialog(mainWindow, {
+			properties: ['openFile']
+		}).then(result => {
+			if (!result.canceled) {
+				filePath = result.filePaths[0];
+				console.log("Selected: " + filePath);
+				
+				fs.readFile(filePath, (err, data) => {
+					if (err) {
+						console.error('Error reading file:', err);
+						return;
+					}
+					console.log('Bytes from file:', data);
+					api.sendFile(data);
+				});
+			}
+		}).catch(err => {
+			console.log(err);
+		});
 	});
 }
 

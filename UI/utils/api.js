@@ -1,12 +1,15 @@
 const url = "http://192.168.79.127:5000";
 
-const sendPDF = async function(file) {
+const sendFile = async function(data) {
     const path = url + '/send';
+
+    FormData = new FormData();
+    FormData.append('file', data);
 
     try {
         const response = await fetch(path, {
             method: 'POST',
-            
+            body: data
         });
 
         if (response.ok) {
@@ -20,5 +23,5 @@ const sendPDF = async function(file) {
 }
 
 module.exports = {
-    sendPDF
+    sendFile
 };

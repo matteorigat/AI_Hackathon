@@ -48,11 +48,7 @@
         <div class="colored-column bg-light">
           <h2>Colonna 1</h2>
           <p>Testo di esempio</p>
-          <form id="pdfForm" action="/upload" method="post" enctype="multipart/form-data">
-            <label for="fileUpload">Seleziona un file PDF:</label>
-            <input type="file" id="fileUpload" name="fileUpload" accept=".pdf">
-            <button id="importButton" type="button" disabled>Importa PDF</button>
-          </form>
+          <button id="fileUploadButton" name="fileUpload">ADD FILE</button>
         </div>
       </div>
       <div class="col">
@@ -76,26 +72,7 @@
     </div>
   </div>  
 
-<script>
-  const fileInput = document.getElementById('fileUpload');
-  const importButton = document.getElementById('importButton');
-
-  fileInput.addEventListener('change', function() {
-    if (fileInput.files.length > 0) {
-      importButton.disabled = false;
-    } else {
-      importButton.disabled = true;
-    }
-  });
-
-  importButton.addEventListener('click', function() {
-    const selectedFile = fileInput.files[0];
-    if (selectedFile) {
-      alert('File selezionato: ' + selectedFile.name);
-    }
-  });
-</script>
-
+<script src="utils/file_loader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
