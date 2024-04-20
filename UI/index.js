@@ -1,22 +1,27 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');  
+const fs = require('fs');
+const api = require("./utils/api");
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 900,
         webPreferences: {
+            contextIsolation: false,
             nodeIntegration: true
         }
     });
 
     win.loadFile('index.html');
+    win.webContents.openDevTools();
 
-    // Uncomment the following line if you want to open the DevTools automatically
-    // win.webContents.openDevTools();
+    ipcMain.on('open-file-dialog', (event, file) => {
+		api.sendPDF(file);
+	});
 }
 
 app.whenReady().then(() => {
-    createWindow();
+    mainWindow = createWindow();
 
     app.on('activate', function () {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
