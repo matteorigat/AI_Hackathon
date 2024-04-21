@@ -145,6 +145,23 @@
       width: 54%;
       bottom: 3%;
     }
+
+    .message-container {
+      margin-top: 20px;
+    }
+
+    .message {
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .send-icon {
+      margin-right: 5px;
+    }
+
   </style>
 </head>
 <body>
@@ -178,16 +195,76 @@
       <div class="col-2">
         <div class="colored-column">
           <div class="colored-column-content">
-            <h2>Colonna 3</h2>
-            <p>Testo di esempio</p>
+            <h2>Chat</h2>
+            <div class="message-container" id="messages"></div>
           </div>
           <div class="vertical-line"></div>
         </div>
       </div>
+           
     </div>
   </div>  
 
 <script src="utils/handler.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const messagesContainer = document.getElementById('messages');
+    const userPrefix = 'user: ';
+    const systemPrefix = 'system: ';
+    const userMessages = [];
+    const systemMessages = [];
+
+    function addMessage(message, isUser) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      if (isUser) {
+        messageDiv.textContent = userPrefix + message;
+        userMessages.push(message);
+      } else {
+        messageDiv.textContent = systemPrefix + message;
+        systemMessages.push(message);
+      }
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.appendChild(document.createElement('br')); // Aggiunge una nuova riga dopo il messaggio
+    }
+
+    function addTextareaAndButton() {
+      const textarea = document.createElement('textarea');
+      textarea.classList.add('form-control', 'mb-3');
+      textarea.placeholder = 'Inserisci testo';
+      textarea.rows = '3';
+
+      const button = document.createElement('button');
+      button.classList.add('btn', 'btn-outline-secondary', 'mb-3');
+      button.type = 'button';
+      button.innerHTML = '<i class="fas fa-paper-plane send-icon"></i> Invia';
+
+      button.addEventListener('click', function() {
+        const textareaValue = textarea.value.trim();
+        if (textareaValue !== '') {
+          addMessage(textareaValue, true); // Aggiunge il messaggio dell'utente
+          textarea.disabled = true;
+          button.disabled = true;
+          // Aggiunge la risposta del server (in questo caso il messaggio dell'utente stesso)
+          setTimeout(() => {
+            addMessage(textareaValue, false);
+            addTextareaAndButton();
+          }, 500); // Simula un ritardo di risposta del server
+        }
+      });
+
+      messagesContainer.appendChild(textarea);
+      messagesContainer.appendChild(button);
+      textarea.focus();
+    }
+
+    addTextareaAndButton();
+  });
+</script>
+  
+  
 </body>
 </html>
