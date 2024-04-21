@@ -10,6 +10,11 @@ document.getElementById('fileUploadButton')
         ipcRenderer.send('open-file-dialog');
     });
 
+document.getElementById('addLinkButton')
+    .addEventListener('click', (event) => {
+        ipcRenderer.send('send-link', document.getElementById('linkInput').value);
+    });
+
 document.getElementById('summarizeButton')
     .addEventListener('click', (event) => {
         var selection = window.getSelection();

@@ -66,6 +66,14 @@ function createWindow() {
 				return message;
 			});
 	});
+
+	ipcMain.on('send-link', async (event, link) => {
+		text = await api.sendLink(link)
+			.then(text => {
+				console.log(text);
+				win.webContents.send('file-text', {'text': text});
+			});
+	});
 }
 
 app.whenReady().then(() => {

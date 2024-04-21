@@ -28,6 +28,35 @@ const sendFile = async function(fileName, data) {
     }
 }
 
+const sendLink = async (link) => {
+    const path = url + '/send_web';
+    data = link;
+    try {
+        const response = await fetch(path, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data })
+        });
+
+        if (response.ok) {
+            text = await response.json()
+                .then(data => data)
+                .catch(err => console.log(err));
+            
+            console.log('File sent successfully!');
+            return text;
+        } else {
+            console.error('Failed to send file:', response.status);
+        }
+    } catch (error) {
+        console.error('An error occurred while sending the file:', error);
+    }
+}
+
+
 const summarize = async (text) => {
     const path = url + '/full_text_summarize';
     data = text;
@@ -110,5 +139,6 @@ module.exports = {
     sendFile,
     summarize,
     summarizeSelected,
-    sendChat
+    sendChat,
+    sendLink
 };

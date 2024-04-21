@@ -175,6 +175,34 @@
       margin-right: 5px;
     }
 
+    .link-input-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    #linkInput {
+      margin-bottom: 19px;
+      flex-grow: 1;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 8px;
+      font-size: 14px;
+      margin-right: 5px; /* Aggiunto margine a destra per separare l'input dal bottone */
+    }
+
+    #addLinkButton {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 12px; /* Modificato padding per mantenere le dimensioni uniformi */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+
+
   </style>
 </head>
 <body>
@@ -192,10 +220,15 @@
       <div class="col-3">
         <div class="colored-column bg-light">
           <h2>Files</h2>
-          <p>Qui andranno i nomi dei file...</p>
+          <p id="files-name"></p>
+          <div class="link-input-container">
+            <input type="text" id="linkInput" placeholder="Inserisci il link...">
+            <button id="addLinkButton"><i class="fas fa-link"></i></button>
+          </div>
           <button id="fileUploadButton" name="fileUpload">ADD FILE</button>
         </div>
       </div>
+      
       <div class="col">
         <div class="colored-column">
           <div class="colored-column-content">
