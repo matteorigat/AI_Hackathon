@@ -16,10 +16,12 @@ def test():
 
 @app.route('/send', methods=['POST'])
 def send():
+    global current_file_name
     if request.method == 'POST':
         json = request.json
         bytes_base64 = json.get('data')
         filename = json.get('fileName')
+        current_file_name = filename
         
         folder_name = "data/"
         if not os.path.exists(folder_name):
@@ -29,9 +31,11 @@ def send():
         file_path = folder_name + filename
         rebuild_file(bytes(bytes_base64['data']), file_path)
 
-        langChain = Model_Class(file_path)
-        text = langChain.get_pdf_text()
-        text = langChain.format_text_per_page(text)
+        model_class = Model_Class(file_path)
+        text = model_class.get_pdf_text()
+        text = model_class.format_text_per_page(text)
+
+        file_dict[filename] = {'model_class': model_class, 'text': text}
 
         return text, 200
 
@@ -42,7 +46,9 @@ def full_text_summarize():
         json = request.json
         input_text = json.get('data')
 
-        text = Model_Class.get_summarize(input_text)
+        text = file_dict[current_file_name]['model_class'].get_summarize(input_text)
+        #print(text['output_text'])
+        text = '\n'.join(text['output_text'].split("\n")[1:])
         return text, 200
     else:
         return "", 404
@@ -53,11 +59,12 @@ def short_text_summarize():
         json = request.json
         input_text = json.get('data')
 
-        text = Model_Class.get_short_summarize(input_text)
+        text = file_dict[current_file_name]['model_class'].get_short_summarize(input_text)
         return text, 200
     else:
         return "", 404
 
+"""
 @app.route('/answer_question', methods=['POST'])
 def answer_question():
     if request.method == 'POST':
@@ -69,13 +76,15 @@ def answer_question():
         return text, 200
     else:
         return "", 404
+"""
+
 
 @app.route('/selected_questions', methods=['POST'])
 def selected_questions():
     if request.method == 'POST':
         json = request.json
         input_text = json.get('data')
-        text = Model_Class.get_questions(input_text)
+        text = file_dict[current_file_name]['model_class'].get_questions(input_text)
         return text, 200
     else:
         return "", 404
