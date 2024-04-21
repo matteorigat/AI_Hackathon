@@ -44,6 +44,9 @@ if __name__ == '__main__':
     
     """
 
+
+
+    """
     pdf_loader = PyPDFLoader(pdf_path)
     pages = pdf_loader.load_and_split()
     print(pages[0].page_content)
@@ -51,3 +54,16 @@ if __name__ == '__main__':
     # summerize
     langChain = langChain.Chain_Class(pdf_path)
     print(langChain.get_summarize(pages)['output_text'])
+    """
+
+
+
+    # web page summarize
+    Model_Class = langChain.Model_Class(pdf_path)
+    text_array = Model_Class.get_webpage("https://en.wikipedia.org/wiki/Large_language_model")
+    for doc in Model_Class.formatted_webpage(text_array):
+        print(doc.page_content)
+
+    print("\n----------------------------------------------------------------\n")
+    print(Model_Class.get_web_summarize(text_array)['output_text'])
+

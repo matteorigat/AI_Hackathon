@@ -16,6 +16,10 @@ function createWindow() {
 	win.removeMenu();
     //win.webContents.openDevTools();
 
+	ipcMain.on('eval-page', (event) => {
+		evalwin = createTestWindow();
+	});
+
     ipcMain.on('open-file-dialog', (event) => {
 		dialog.showOpenDialog(mainWindow, {
 			properties: ['openFile']
@@ -79,6 +83,15 @@ function createWindow() {
 			});
 	});
 
+	ipcMain.on('send-answer', async (event, answ) => {
+		text = await api.sendResponse(answ)
+			.then(text => {
+				console.log("GESU");
+				console.log(text);
+				win.webContents.send('answer-text', {'text': text});
+			});
+	});
+
 	function toggleSummarize() {
 		win.webContents.send('toggle-summarize');
 	}
@@ -94,15 +107,41 @@ function createTestWindow() {
         }
     });
 
+	win.webContents.openDevTools()
+
 	ipcMain.on('question', async (event) => {
 		await api.askQuestion()
 			.then(question => {
-				console.log(question);
+				console.log("question: " + question);
 				win.webContents.send('question-text', {"question": question});
 			});
 	})
 
 	return win;
+}
+
+function createTestWindow() {
+	const win = new BrowserWindow({
+		width: 800,
+		height: 600,
+		webPreferences: {
+			contextIsolation: false,
+			nodeIntegration: true
+		}
+	});
+
+	win.loadFile('eval.html');
+	win.removeMenu();
+	//win.webContents.openDevTools();
+
+	ipcMain.on('question', async (event) => {
+		question = await api.askQuestion()
+			.then(question => {
+				console.log(question);
+				win.webContents.send('question-text', question);
+			});
+	});
+
 }
 
 app.whenReady().then(() => {

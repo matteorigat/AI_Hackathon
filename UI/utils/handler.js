@@ -30,6 +30,12 @@ document.getElementById('summarizeButton')
         }
     });
 
+document.getElementById('newpage')
+    .addEventListener('click', (event) => {
+        ipcRenderer.send('eval-page');
+
+    });
+
 
 ipcRenderer.on('file-text', (event, pages)=> {
     i = 1;
@@ -55,6 +61,12 @@ ipcRenderer.on('web-text', (event, pages)=> {
     var loaderContainer = document.getElementById('loaderContainer');
     loaderContainer.style.display = 'none';
     document.getElementById('file-text').innerHTML = text;
+});
+
+ipcRenderer.on('question-text', (event, question)=> {
+    var loaderContainer = document.getElementById('loaderContainer');
+    loaderContainer.style.display = 'none';
+    document.getElementById('question-text').innerHTML = question;
 });
 
 ipcRenderer.on('open-modal', (event, summary) => {
