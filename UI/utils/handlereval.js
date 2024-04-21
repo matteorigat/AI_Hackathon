@@ -23,7 +23,6 @@ document.getElementById('sendAnswerButton').addEventListener('click', (event) =>
 });
 
 
-ipcRenderer.on('answer-text', (event, text)=> {
-    console.log(text);
-    document.getElementById('answer-text-box').innerHTML = text;
+ipcRenderer.on('response-text', (event, text)=> {
+    document.getElementById('answer-text-box').innerHTML = text.text;
 });

@@ -83,15 +83,6 @@ function createWindow() {
 			});
 	});
 
-	ipcMain.on('send-answer', async (event, answ) => {
-		text = await api.sendResponse(answ)
-			.then(text => {
-				console.log("GESU");
-				console.log(text);
-				win.webContents.send('answer-text', {'text': text});
-			});
-	});
-
 	function toggleSummarize() {
 		win.webContents.send('toggle-summarize');
 	}
@@ -139,6 +130,15 @@ function createTestWindow() {
 			.then(question => {
 				console.log(question);
 				win.webContents.send('question-text', question);
+			});
+	});
+
+	ipcMain.on('send-answer', async (event, answ) => {
+		text = await api.sendResponse(answ)
+			.then(text => {
+				console.log("GESU");
+				console.log(text);
+				win.webContents.send('response-text', {'text': text});
 			});
 	});
 
