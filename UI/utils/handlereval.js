@@ -26,3 +26,4 @@ document.getElementById('sendAnswerButton').addEventListener('click', (event) =>
 ipcRenderer.on('response-text', (event, text)=> {
     document.getElementById('answer-text-box').innerHTML = text.text;
 });
+
