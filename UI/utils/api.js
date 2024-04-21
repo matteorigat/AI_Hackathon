@@ -46,13 +46,13 @@ const sendLink = async (link) => {
                 .then(data => data)
                 .catch(err => console.log(err));
             
-            console.log('File sent successfully!');
+            console.log('Link sent successfully!');
             return text;
         } else {
-            console.error('Failed to send file:', response.status);
+            console.error('Failed to send link:', response.status);
         }
     } catch (error) {
-        console.error('An error occurred while sending the file:', error);
+        console.error('An error occurred while sending the link:', error);
     }
 }
 
