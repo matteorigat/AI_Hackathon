@@ -246,13 +246,14 @@
         </div>
       </div>
       
-      <<div class="col">
+      <div class="col">
         <div class="colored-column">
           <div class="colored-column-content">
             <h2>File Text</h2>
             <p id="file-text"></p>
           </div>
           <div class="vertical-line"></div>
+          <button id="speak" onclick="speak()" style="margin-bottom: 50%;">Speak</button>
           <button id="summarizeButton">Summarize</button>
           <div id="loaderContainer" class="loader-container">
             <div class="loader">
@@ -293,6 +294,34 @@
   closeButton.addEventListener('click', function() {
     modal.style.display = 'none';
   });
+</script>
+
+<script>
+  function speak() {
+    var textCentric = document.getElementById('file-text');
+    var synthesis = window.speechSynthesis;
+    var voices = synthesis.getVoices();
+    var utterance = new SpeechSynthesisUtterance();
+    utterance.voice = voices[0];
+    utterance.volume = 1;
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    var text = textCentric.innerText;
+    var maxLength = 32000;
+    var textArray = [];
+
+    for (var i = 0; i < text.length; i += maxLength) {
+      var chunk = text.substring(i, i + maxLength);
+      textArray.push(chunk);
+    }
+
+    textArray.forEach(function(chunk) {
+      utterance.text = chunk;
+      synthesis.speak(utterance);
+    });
+  }
+
 </script>
 </body>
 </html>
