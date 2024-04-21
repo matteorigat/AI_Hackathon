@@ -3,6 +3,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.chains import RetrievalQA
+from langchain_community.document_loaders import WebBaseLoader
 
 from langchain import PromptTemplate
 from langchain.chains.summarize import load_summarize_chain
@@ -11,21 +12,20 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.schema.document import Document
 
-
-
-
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LTTextContainer
 
 
+from bs4 import BeautifulSoup
 import chromadb
 import ollama
 
 # https://github.com/ollama/ollama/blob/main/docs/tutorials/langchainpy.md
 
+
 # for load a webpage
-#loader = WebBaseLoader("https://www.gutenberg.org/files/1727/1727-h/1727-h.htm")
-#data = loader.load()
+# loader = WebBaseLoader("https://www.gutenberg.org/files/1727/1727-h/1727-h.htm")
+# data = loader.load()
 
 class Model_Class:
     def __init__(self, path):

@@ -1,12 +1,16 @@
 from flask import Flask, request
 import os
 from langChain import Model_Class
+import random
 
 import ollama
 models = ['gemma:2b', 'gemma:7b']
 model = models[0]
 current_file_name = ""
 file_dict = {}
+
+random_text = ""
+question_eval = ""
 
 app = Flask(__name__)
 
@@ -21,6 +25,7 @@ def send():
         json = request.json
         bytes_base64 = json.get('data')
         filename = json.get('fileName')
+        filename = os.path.basename(filename)
         current_file_name = filename
         
         folder_name = "data/"
@@ -36,6 +41,26 @@ def send():
         text = model_class.format_text_per_page(text)
 
         file_dict[filename] = {'model_class': model_class, 'text': text}
+
+        return text, 200
+
+
+@app.route('/send_web', methods=['POST'])
+def send_web():
+    global current_file_name
+    if request.method == 'POST':
+        json = request.json
+        input_link = json.get('data')
+        current_file_name = input_link
+
+        model_class = Model_Class(input_link)
+        text_array = model_class.get_webpage(input_link)
+
+        text = []
+        for doc in model_class.formatted_webpage(text_array):
+            text.append(doc.page_content)
+
+        file_dict[input_link] = {'model_class': model_class, 'text': text}
 
         return text, 200
 

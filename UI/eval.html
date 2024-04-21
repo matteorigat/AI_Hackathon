@@ -226,20 +226,6 @@
       transition: background-color 0.3s;
     }
 
-    .loaderButton {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #3498db;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      animation: spin 2s linear infinite;
-      margin: auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
 
 
   </style>
@@ -252,32 +238,30 @@
         <div class="colored-column bg-light">
           <h2>Menu</h2>
           <p id="files-name"></p>
-          <div class="link-input-container">
-            <input type="text" id="linkInput" placeholder="Insert the link...">
-            <button id="addLinkButton"><i class="fas fa-link"></i></button>
-          </div>
-          <button id="fileUploadButton" name="fileUpload">ADD FILE</button>
-          <button id="newpage" name="fnewpage">Evaluation page</button>
+          <!--<button id="refreshwindow" name="refresh">refresh</button>-->
         </div>
       </div>
       
       <div class="col">
         <div class="colored-column">
           <div class="colored-column-content">
-            <h2>File Text</h2>
-            <p id="file-text"></p>
-          </div>
-          <div class="vertical-line"></div>
-          <button id="speak" onclick="speak()" style="width: 10%; position: fixed; bottom: 0; left: 70%;"><i class="fas fa-volume-up" style="font-size: 24px;"></i></button>
-          <button id="summarizeButton" style="width: 43%; float: left;" onclick="toggleSummarize()">Summarize</button>
-
-          <div id="loaderContainer" class="loader-container">
+            <h2>Evaluation</h2>
+            <p id="question-text"></p>
+            <!--<div id="loaderContainer" class="loader-container">
             <div class="loader">
               <svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
               </svg>
             </div>
+          </div> -->
+            <div class="link-input-container">
+              <textarea id="answerInput" placeholder="write your answer" style="width: 90%"></textarea>
+              <button id="sendAnswerButton" style="margin-left: 1%; margin-top: 3%"><i class="fas fa-paper-plane"></i></button>
+            <!--<input type="textarea" id="answerInput" placeholder="write your answer">-->
           </div>
+            <p id="answer-text-box"></p>
+          </div>
+          <div class="vertical-line"></div>
         </div>
       </div>
       <div id="summarizeModal" class="modal">
@@ -286,21 +270,11 @@
           <p id="summarizeText">This is a modal popup window. You can put any content here.</p>
         </div>
       </div>
-      
-      <div class="col-2">
-        <div class="colored-column">
-          <div class="colored-column-content">
-            <h2>Chat</h2>
-            <div class="message-container" id="messages"></div>
-          </div>
-          <div class="vertical-line"></div>
-        </div>
-      </div>
-           
+
     </div>
   </div>  
 
-<script src="utils/handler.js"></script>
+<script src="utils/handlereval.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -311,34 +285,5 @@
     modal.style.display = 'none';
   });
 </script>
-
-<script>
-  function speak() {
-    var textCentric = document.getElementById('file-text');
-    var synthesis = window.speechSynthesis;
-    var voices = synthesis.getVoices();
-    var utterance = new SpeechSynthesisUtterance();
-    utterance.voice = voices[0];
-    utterance.volume = 1;
-    utterance.rate = 1;
-    utterance.pitch = 1;
-
-    var text = textCentric.innerText;
-    var maxLength = 32000;
-    var textArray = [];
-
-    for (var i = 0; i < text.length; i += maxLength) {
-      var chunk = text.substring(i, i + maxLength);
-      textArray.push(chunk);
-    }
-
-    textArray.forEach(function(chunk) {
-      utterance.text = chunk;
-      synthesis.speak(utterance);
-    });
-  }
-
-</script>
-
 </body>
 </html>

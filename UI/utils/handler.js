@@ -30,6 +30,12 @@ document.getElementById('summarizeButton')
         }
     });
 
+document.getElementById('newpage')
+    .addEventListener('click', (event) => {
+        ipcRenderer.send('eval-page');
+
+    });
+
 
 ipcRenderer.on('file-text', (event, pages)=> {
     i = 1;
@@ -55,6 +61,12 @@ ipcRenderer.on('web-text', (event, pages)=> {
     var loaderContainer = document.getElementById('loaderContainer');
     loaderContainer.style.display = 'none';
     document.getElementById('file-text').innerHTML = text;
+});
+
+ipcRenderer.on('question-text', (event, question)=> {
+    var loaderContainer = document.getElementById('loaderContainer');
+    loaderContainer.style.display = 'none';
+    document.getElementById('question-text').innerHTML = question;
 });
 
 ipcRenderer.on('open-modal', (event, summary) => {
@@ -87,18 +99,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function addTextareaAndButton() {
       const textarea = document.createElement('textarea');
       textarea.classList.add('form-control', 'mb-3');
-      textarea.placeholder = 'Inserisci testo';
+      textarea.placeholder = 'Insert your question...';
       textarea.rows = '3';
 
       const button = document.createElement('button');
       button.classList.add('btn', 'btn-outline-secondary', 'mb-3');
       button.type = 'button';
-      button.innerHTML = '<i class="fas fa-paper-plane send-icon"></i> Invia';
+      button.innerHTML = '<i class="fas fa-paper-plane send-icon"></i> Send';
 
       button.addEventListener('click', function() {
         const textareaValue = textarea.value.trim();
         if (textareaValue !== '') {
-            addMessage(textareaValue, true); // Aggiunge il messaggio dell'utente
+            // addMessage(textareaValue, true); // Aggiunge il messaggio dell'utente
             textarea.disabled = true;
             button.disabled = true;
 
@@ -111,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ipcRenderer.send('message', [textareaValue, context]);
             
             ipcRenderer.on('message-reply', (event, message) => {
+                message = message.split('"result": "')[1].replace('."\n}', "")
                 addMessage(message, false);
                 addTextareaAndButton();
             });
