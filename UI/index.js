@@ -82,16 +82,6 @@ function createWindow() {
 	function toggleSummarize() {
 		win.webContents.send('toggle-summarize');
 	}
-
-	function toggleSummarize() {
-		var button = document.getElementById('summarizeButton');
-		if (button.innerText === 'Summarize') {
-		  button.innerHTML = '<div class="loaderButton"></div>';
-		}
-		else {
-		  button.innerText = 'Summarize';
-		}
-	}
 }
 
 app.whenReady().then(() => {
