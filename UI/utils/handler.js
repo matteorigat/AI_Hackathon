@@ -124,3 +124,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addTextareaAndButton();
   });
+
+  ipcRenderer.on('toggle-summarize', () => {
+    var button = document.getElementById('summarizeButton');
+    if (button.innerText === 'Summarize') {
+        button.innerHTML = '<div class="loaderButton"></div>';
+    } else {
+        button.innerText = 'Summarize';
+    }
+});

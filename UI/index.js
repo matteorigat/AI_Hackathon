@@ -43,18 +43,22 @@ function createWindow() {
 	});
 
 	ipcMain.on('summarize', async (event, text) => {
+		toggleSummarize();
 		summary = await api.summarize(text)
 			.then(summary => {
 				console.log(summary);
 				win.webContents.send('open-modal', summary);
+				toggleSummarize();
 			});
 	});
 
 	ipcMain.on('summarize-selected', async (event, text) => {
+		toggleSummarize();
 		summary = await api.summarizeSelected(text)
 			.then(summary => {
 				console.log(summary);
 				win.webContents.send('open-modal', summary);
+				toggleSummarize();
 			});
 	});
 
@@ -74,6 +78,20 @@ function createWindow() {
 				win.webContents.send('web-text', {'text': text});
 			});
 	});
+
+	function toggleSummarize() {
+		mainWindow.webContents.send('toggle-summarize');
+	}
+
+	function toggleSummarize() {
+		var button = document.getElementById('summarizeButton');
+		if (button.innerText === 'Summarize') {
+		  button.innerHTML = '<div class="loaderButton"></div>';
+		}
+		else {
+		  button.innerText = 'Summarize';
+		}
+	}
 }
 
 app.whenReady().then(() => {
