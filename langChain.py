@@ -8,6 +8,10 @@ from langchain import PromptTemplate
 from langchain.chains.summarize import load_summarize_chain
 
 
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.schema.document import Document
+
+
 
 
 from pdfminer.high_level import extract_pages
@@ -65,7 +69,10 @@ class Model_Class:
         return response
 
 
-    def get_summarize(self, document):
+    def get_summarize(self, text):
+
+        text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=100)
+        docs = [Document(page_content=x) for x in text_splitter.split_text(text)]
 
         map_prompt_template = """
                               Write a very short summary of this chunk of text that includes the main points and any important details.
@@ -92,7 +99,7 @@ class Model_Class:
             return_intermediate_steps=True,
         )
 
-        map_reduce_outputs = map_reduce_chain({"input_documents": document})
+        map_reduce_outputs = map_reduce_chain({"input_documents": docs})
 
         return map_reduce_outputs
 
