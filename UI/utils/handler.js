@@ -43,4 +43,66 @@ ipcRenderer.on('open-modal', (event, summary) => {
     console.log("MODAL");
     document.getElementById('summarizeText').innerHTML = summary;
     document.getElementById('summarizeModal').style.display = "block";
-})
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const messagesContainer = document.getElementById('messages');
+    const userPrefix = 'user: ';
+    const systemPrefix = 'system: ';
+    const userMessages = [];
+    const systemMessages = [];
+
+    function addMessage(message, isUser) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      if (isUser) {
+        messageDiv.textContent = userPrefix + message;
+        userMessages.push(message);
+      } else {
+        messageDiv.textContent = systemPrefix + message;
+        systemMessages.push(message);
+      }
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.appendChild(document.createElement('br')); // Aggiunge una nuova riga dopo il messaggio
+    }
+
+    function addTextareaAndButton() {
+      const textarea = document.createElement('textarea');
+      textarea.classList.add('form-control', 'mb-3');
+      textarea.placeholder = 'Inserisci testo';
+      textarea.rows = '3';
+
+      const button = document.createElement('button');
+      button.classList.add('btn', 'btn-outline-secondary', 'mb-3');
+      button.type = 'button';
+      button.innerHTML = '<i class="fas fa-paper-plane send-icon"></i> Invia';
+
+      button.addEventListener('click', function() {
+        const textareaValue = textarea.value.trim();
+        if (textareaValue !== '') {
+            addMessage(textareaValue, true); // Aggiunge il messaggio dell'utente
+            textarea.disabled = true;
+            button.disabled = true;
+
+            context = []
+            for (i = 0; i < userMessages.length-1; i++) {
+                context.push("user: " + userMessages[i] + "\n");
+                context.push("system: " + systemMessages[i] + "\n");
+            }
+            
+            ipcRenderer.send('message', [textareaValue, context]);
+            
+            ipcRenderer.on('message-reply', (event, message) => {
+                addMessage(message, false);
+                addTextareaAndButton();
+            });
+        }
+      });
+
+      messagesContainer.appendChild(textarea);
+      messagesContainer.appendChild(button);
+      textarea.focus();
+    }
+
+    addTextareaAndButton();
+  });

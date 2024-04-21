@@ -80,8 +80,35 @@ const summarizeSelected = async (text) => {
     }
 }
 
+const sendChat = async (lastResponse, context) => {
+    const path = url + '/chat';
+    data = lastResponse;
+    
+    try {
+        const response = await fetch(path, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data, context })
+        });
+    
+        if (response.ok) {
+            text = await response.text();
+            return text;
+        } else {
+            console.log("Failed to receive message", response.status);
+            return null;
+        }
+    } catch (err) {
+        console.error('An error occurred while sending the message:', err);
+    }
+}
+
 module.exports = {
     sendFile,
     summarize,
-    summarizeSelected
+    summarizeSelected,
+    sendChat
 };

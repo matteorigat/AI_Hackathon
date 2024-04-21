@@ -13,7 +13,8 @@ function createWindow() {
     });
 
     win.loadFile('index.html');
-    win.webContents.openDevTools();
+	win.removeMenu();
+    //win.webContents.openDevTools();
 
     ipcMain.on('open-file-dialog', (event) => {
 		dialog.showOpenDialog(mainWindow, {
@@ -54,6 +55,15 @@ function createWindow() {
 			.then(summary => {
 				console.log(summary);
 				win.webContents.send('open-modal', summary);
+			});
+	});
+
+	ipcMain.on('message', async (event, [lastResponse, context]) => {
+		message = await api.sendChat(lastResponse, context)
+			.then(message => {
+				console.log("msg: " + message);
+				win.webContents.send('message-reply', message);
+				return message;
 			});
 	});
 }
