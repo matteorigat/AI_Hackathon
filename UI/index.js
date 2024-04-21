@@ -80,7 +80,7 @@ function createWindow() {
 	});
 
 	function toggleSummarize() {
-		mainWindow.webContents.send('toggle-summarize');
+		win.webContents.send('toggle-summarize');
 	}
 
 	function toggleSummarize() {
