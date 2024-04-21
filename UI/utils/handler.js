@@ -44,6 +44,19 @@ ipcRenderer.on('file-text', (event, pages)=> {
     document.getElementById('file-text').innerHTML = text;
 });
 
+ipcRenderer.on('web-text', (event, pages)=> {
+    i = 1;
+    text = '<br>';
+    pages.text.forEach(page => {
+        text += page + "<br>";
+        i++;
+    });
+    
+    var loaderContainer = document.getElementById('loaderContainer');
+    loaderContainer.style.display = 'none';
+    document.getElementById('file-text').innerHTML = text;
+});
+
 ipcRenderer.on('open-modal', (event, summary) => {
     console.log("MODAL");
     document.getElementById('summarizeText').innerHTML = summary;

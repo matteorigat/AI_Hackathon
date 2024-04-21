@@ -71,7 +71,7 @@ function createWindow() {
 		text = await api.sendLink(link)
 			.then(text => {
 				console.log(text);
-				win.webContents.send('file-text', {'text': text});
+				win.webContents.send('web-text', {'text': text});
 			});
 	});
 }
