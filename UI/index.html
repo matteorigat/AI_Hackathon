@@ -15,18 +15,43 @@
       overflow: hidden; /* Rimuovi lo scroll dalla pagina */
     }
     .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
+      display: none;
+      position: fixed;
+      z-index: 1;
       left: 0;
       top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
       padding-top: 60px;
-  }
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%; /* Larghezza del modale */
+      max-width: 600px;
+      position: relative;
+    }
+
+    /* Stili per la X del modale */
+    .close {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 24px;
+      color: #fff;
+      background-color: #af7ceb; /* Colore del cerchio */
+      width: 30px;
+      height: 30px;
+      border-radius: 50%; /* Per rendere il cerchio */
+      text-align: center;
+      line-height: 30px;
+      cursor: pointer;
+    }
     .container-fluid {
       padding-right: 0;
       padding-left: 0;
@@ -209,14 +234,6 @@
 
   <div class="container-fluid">
     <div class="row g-0">
-      <div id="summarizeModal" class="modal">
-
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <p id="summarizeText">This is a modal popup window. You can put any content here.</p>
-        </div>
-      
-      </div>
       <div class="col-3">
         <div class="colored-column bg-light">
           <h2>Files</h2>
@@ -229,7 +246,7 @@
         </div>
       </div>
       
-      <div class="col">
+      <<div class="col">
         <div class="colored-column">
           <div class="colored-column-content">
             <h2>File Text</h2>
@@ -246,6 +263,13 @@
           </div>
         </div>
       </div>
+      <div id="summarizeModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="summarizeText">This is a modal popup window. You can put any content here.</p>
+        </div>
+      </div>
+      
       <div class="col-2">
         <div class="colored-column">
           <div class="colored-column-content">
@@ -262,5 +286,13 @@
 <script src="utils/handler.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  var closeButton = document.querySelector('.close');
+  var modal = document.getElementById('summarizeModal');
+
+  closeButton.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+</script>
 </body>
 </html>
