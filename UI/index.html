@@ -226,6 +226,20 @@
       transition: background-color 0.3s;
     }
 
+    .loaderButton {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 2s linear infinite;
+      margin: auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
 
   </style>
@@ -253,8 +267,8 @@
             <p id="file-text"></p>
           </div>
           <div class="vertical-line"></div>
-          <button id="speak" onclick="speak()" style="width: 20%; margin-left: 80%;"><i class="fas fa-volume-up" style="font-size: 24px;"></i></button>
-          <button id="summarizeButton" style="width: 43%; float: left;">Summarize</button>
+          <button id="speak" onclick="speak()" style="width: 10%; position: fixed; bottom: 0; left: 70%;"><i class="fas fa-volume-up" style="font-size: 24px;"></i></button>
+          <button id="summarizeButton" style="width: 43%; float: left;" onclick="toggleSummarize()">Summarize</button>
 
           <div id="loaderContainer" class="loader-container">
             <div class="loader">
@@ -323,6 +337,18 @@
     });
   }
 
+</script>
+
+<script>
+  function toggleSummarize() {
+  var button = document.getElementById('summarizeButton');
+  if (button.innerText === 'Summarize') {
+    button.innerHTML = '<div class="loaderButton"></div>';
+  }
+  else {
+    button.innerText = 'Summarize';
+  }
+}
 </script>
 </body>
 </html>
