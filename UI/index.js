@@ -76,6 +76,27 @@ function createWindow() {
 	});
 }
 
+function createTestWindow() {
+	const win = new BrowserWindow({
+        width: 1200,
+        height: 900,
+        webPreferences: {
+            contextIsolation: false,
+            nodeIntegration: true
+        }
+    });
+
+	ipcMain.on('question', async (event) => {
+		await api.askQuestion()
+			.then(question => {
+				console.log(question);
+				win.webContents.send('question-text', {"question": question});
+			});
+	})
+
+	return win;
+}
+
 app.whenReady().then(() => {
     mainWindow = createWindow();
 

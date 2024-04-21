@@ -135,10 +135,35 @@ const sendChat = async (lastResponse, context) => {
     }
 }
 
+const askQuestion = async () => {
+    const path = url + '/ask_question';
+    
+    try {
+        const response = await fetch(path, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+    
+        if (response.ok) {
+            text = await response.text();
+            return text;
+        } else {
+            console.log("Failed to receive question", response.status);
+            return null;
+        }
+    } catch (err) {
+        console.error('An error occurred while asking the question:', err);
+    }
+}
+
 module.exports = {
     sendFile,
     summarize,
     summarizeSelected,
     sendChat,
-    sendLink
+    sendLink,
+    askQuestion
 };
