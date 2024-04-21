@@ -43,11 +43,18 @@ function createWindow() {
 
 	ipcMain.on('summarize', async (event, text) => {
 		summary = await api.summarize(text)
-			.then(summary => console.log(summary));
+			.then(summary => {
+				console.log(summary);
+				win.webContents.send('open-modal', summary);
+			});
 	});
 
-	ipcMain.on('summarize-text', (event, text) => {
-		
+	ipcMain.on('summarize-selected', async (event, text) => {
+		summary = await api.summarizeSelected(text)
+			.then(summary => {
+				console.log(summary);
+				win.webContents.send('open-modal', summary);
+			});
 	});
 }
 

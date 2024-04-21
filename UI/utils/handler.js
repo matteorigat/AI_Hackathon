@@ -38,3 +38,9 @@ ipcRenderer.on('file-text', (event, pages)=> {
     loaderContainer.style.display = 'none';
     document.getElementById('file-text').innerHTML = text;
 });
+
+ipcRenderer.on('open-modal', (event, summary) => {
+    console.log("MODAL");
+    document.getElementById('summarizeText').innerHTML = summary;
+    document.getElementById('summarizeModal').style.display = "block";
+})

@@ -43,10 +43,7 @@ const summarize = async (text) => {
         });
     
         if (response.ok) {
-            text = await response.json()
-                .then(data => data)
-                .catch(err => console.log(err));
-            
+            text = await response.text();
             return text;
         } else {
             console.log("Failed to receive summary", response.status);
@@ -57,8 +54,30 @@ const summarize = async (text) => {
     }
 }
 
-const summarizeSelected = (text) => {
+const summarizeSelected = async (text) => {
     const path = url + '/short_text_summarize';
+    data = text;
+    
+    try {
+        const response = await fetch(path, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data })
+        });
+    
+        if (response.ok) {
+            text = await response.text();
+            return text;
+        } else {
+            console.log("Failed to receive summary", response.status);
+            return null;
+        }
+    } catch (err) {
+        console.error('An error occurred while sending the file:', err);
+    }
 }
 
 module.exports = {

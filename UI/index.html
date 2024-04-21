@@ -14,6 +14,19 @@
       background-color: #f8f9fa;
       overflow: hidden; /* Rimuovi lo scroll dalla pagina */
     }
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      padding-top: 60px;
+  }
     .container-fluid {
       padding-right: 0;
       padding-left: 0;
@@ -151,6 +164,14 @@
 
   <div class="container-fluid">
     <div class="row g-0">
+      <div id="summarizeModal" class="modal">
+
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="summarizeText">This is a modal popup window. You can put any content here.</p>
+        </div>
+      
+      </div>
       <div class="col-3">
         <div class="colored-column bg-light">
           <h2>Files</h2>
