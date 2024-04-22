@@ -9,10 +9,8 @@
 # Dare opzione di usare font che possono leggere persone dislessiche (?)
 # Dare opzione di fare un read aloud
 
-import gemma
 import pdf_miner
 import langChain
-from langchain_community.document_loaders import PyPDFLoader
 
 if __name__ == '__main__':
     # Example usage

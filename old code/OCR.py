@@ -58,7 +58,7 @@ def extract_text_from_image(image):
 if __name__ == '__main__':
 
     # Step 1: Reading PDF Files
-    pdf_file = 'pdf/P1-10-sequence-learning.pdf'
+    pdf_file = '../pdf/P1-10-sequence-learning.pdf'
     pages = convert_from_path(pdf_file)
 
     # Create a list to store extracted text from all pages
